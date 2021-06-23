@@ -1,3 +1,8 @@
+import datetime
+
+from main.enums import ExpenseCategory
+
+
 class WorkbookHelpers:
     def __init__(self, wb):
         self.wb = wb
@@ -5,6 +10,17 @@ class WorkbookHelpers:
     def _get_worksheet(self):
         ws = self.wb.active
         return ws
+
+    def _input_amount(self, amount):
+        return int(amount)
+
+    def _input_date(self):
+        return datetime.datetime.now()
+
+    def _input_category(self, category):
+        assert category in ExpenseCategory.get_list()
+
+        return category
 
     def get_occupied_dimension(self):
         dimension = self._get_worksheet().calculate_dimension()
@@ -23,30 +39,17 @@ class WorkbookHelpers:
         else:
             raise Exception("Option Invalid")
 
-    def _input_amount(self, amount):
-        pass
-
-    def _input_date(self, date):
-        pass
-
-    def _input_category(self, category):
-        pass
-
     def input_expense(
             self,
+            worksheet,
             amount,
-            date,
             expense_category,
     ):
-
-        self._input_amount(amount)
-        self._input_date(date)
-        self._input_category(expense_category)
-
+        pass
     def input_deposit(
             self,
+            worksheet,
             amount,
-            date,
     ):
-        self._input_amount(amount)
-        self._input_date(date)
+        pass
+
