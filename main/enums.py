@@ -16,3 +16,8 @@ class ExpenseCategory(EnumBase):
     NECESSITIES = "Necessities"
     TRAVEL = "Travel"
     ENTERTAINING = "Entertaining"
+
+
+class RecordType(EnumBase):
+    EXPENSE = "Expense"
+    DEPOSIT = "Deposit"
