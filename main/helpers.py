@@ -30,7 +30,7 @@ class WorkbookHelpers:
     def _input_type(self, input_row, type):
         assert type in RecordType.get_list()
 
-        input_cell = f'A{input_row}'
+        input_cell = f'B{input_row}'
         self._get_worksheet()[input_cell] = type
 
     def _input_date(self, input_row):
@@ -48,18 +48,18 @@ class WorkbookHelpers:
         return dimension
 
     def get_amount_by_record_type_and_option(self, record_type, option="Total"):
-        if record_type == RecordType.DEPOSIT:
-            self.calculate_amount_by_record_type_and_option(record_type, option)
-        elif record_type == RecordType.EXPENSE:
-            self.calculate_amount_by_record_type_and_option(record_type, option)
+        if record_type == "Deposit":
+            return self.calculate_amount_by_record_type_and_option(record_type, option)
+        elif record_type == "Expense":
+            return self.calculate_amount_by_record_type_and_option(record_type, option)
         else:
             raise Exception("Record Type Invalid")
 
     def calculate_amount_by_record_type_and_option(self, record_type, option):
         total = 0
-        for i in range(self._get_occupied_row()):
+        for i in range(1, self._get_occupied_row()):
             cell = f'B{i}'
-            cell_content = self._get_worksheet()[cell]
+            cell_content = self._get_worksheet()[cell].value
             if self.check_record_type(record_type, cell_content):
                 if option == "Total":
                     total += self.get_amount_by_row(i)
@@ -71,8 +71,8 @@ class WorkbookHelpers:
         return total
 
     def get_amount_by_row(self, row):
-        cell = f'C{row}'
-        return self._get_worksheet()[cell]
+        cell = f'D{row}'
+        return self._get_worksheet()[cell].value
 
     def check_option(self, option, cell_content):
         assert option in ExpenseOption.get_list()
