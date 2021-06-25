@@ -55,9 +55,13 @@ class WorkbookHelpers:
             cell = f'B{i}'
             cell_content = self._get_worksheet()[cell]
             if self.check_record_type(record_type, cell_content):
-                total += self.get_amount_by_row(i)
-            else:
-                pass
+                if option == "Total":
+                    total += self.get_amount_by_row(i)
+                else:
+                    option_cell = f'C{i}'
+                    cell_option_content = self._get_worksheet()[option_cell]
+                    if self.check_option(option, cell_option_content):
+                        total += self.get_amount_by_row(i)
         return total
 
     def get_amount_by_row(self, row):
