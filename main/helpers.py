@@ -41,6 +41,28 @@ class WorkbookHelpers:
         dimension = self._get_worksheet().calculate_dimension()
         return dimension
 
+    def calculate_amount_by_record_type(self, record_type):
+        total = 0
+        for i in range(self._get_occupied_row()):
+            cell = f'C{i}'
+            cell_content = self._get_worksheet()[cell]
+            if self.check_record_type(record_type, cell_content):
+                total += self.get_amount_by_row(i)
+            else:
+                pass
+        return total
+
+    def get_amount_by_row(self, row):
+        cell = f'C{row}'
+        return self._get_worksheet()[cell]
+
+    def check_record_type(self, record_type, cell_content):
+        assert record_type in RecordType.get_list()
+        if cell_content == record_type:
+            return True
+        else:
+            return False
+
     def get_balance(self):
         pass
 
