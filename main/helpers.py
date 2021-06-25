@@ -1,6 +1,6 @@
 import datetime
 
-from main.enums import ExpenseCategory, RecordType
+from main.enums import ExpenseCategory, RecordType, ExpenseOption
 
 
 class WorkbookHelpers:
@@ -41,10 +41,18 @@ class WorkbookHelpers:
         dimension = self._get_worksheet().calculate_dimension()
         return dimension
 
-    def calculate_amount_by_record_type(self, record_type):
+    def get_amount_by_record_type_and_option(self, record_type, option="Total"):
+        if record_type == RecordType.DEPOSIT:
+            self.calculate_amount_by_record_type_and_option(record_type, option)
+        elif record_type == RecordType.EXPENSE:
+            self.calculate_amount_by_record_type_and_option(record_type, option)
+        else:
+            raise Exception("Record Type Invalid")
+
+    def calculate_amount_by_record_type_and_option(self, record_type, option):
         total = 0
         for i in range(self._get_occupied_row()):
-            cell = f'C{i}'
+            cell = f'B{i}'
             cell_content = self._get_worksheet()[cell]
             if self.check_record_type(record_type, cell_content):
                 total += self.get_amount_by_row(i)
@@ -55,6 +63,13 @@ class WorkbookHelpers:
     def get_amount_by_row(self, row):
         cell = f'C{row}'
         return self._get_worksheet()[cell]
+
+    def check_option(self, option, cell_content):
+        assert option in ExpenseOption.get_list()
+        if cell_content == option:
+            return True
+        else:
+            return False
 
     def check_record_type(self, record_type, cell_content):
         assert record_type in RecordType.get_list()
