@@ -91,20 +91,10 @@ class WorkbookHelpers:
             raise Exception("Option Invalid")
 
     def get_balance(self):
-        return self.get_total_deposit() - self.get_expense()
-
-    def get_expense(self, option="Total"):
-        if option == "Month":
-            pass
-        elif option == "Category":
-            pass
-        elif option == "Total":
-            return self.calculate_amount_by_record_type(RecordType.DEPOSIT)
-        else:
-            raise Exception("Option Invalid")
+        return self.get_total_deposit() - self.get_expense_by_option()
 
     def get_total_deposit(self):
-        return self.calculate_amount_by_record_type(RecordType.DEPOSIT)
+        return self.get_amount_by_record_type_and_option(RecordType.DEPOSIT)
 
     def input_expense(
             self,
