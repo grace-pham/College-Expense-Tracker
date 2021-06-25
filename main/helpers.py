@@ -11,6 +11,12 @@ class WorkbookHelpers:
         ws = self.wb.active
         return ws
 
+    def _get_occupied_row(self):
+        return int(self.get_occupied_dimension()[-2:])
+
+    def _get_input_row(self):
+        return int(self.get_occupied_dimension()[-2:]) + 1
+
     def _input_amount(self, input_row, amount):
         input_cell = f'D{input_row}'
         self._get_worksheet()[input_cell] = int(amount)
