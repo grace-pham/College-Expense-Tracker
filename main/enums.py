@@ -21,3 +21,9 @@ class ExpenseCategory(EnumBase):
 class RecordType(EnumBase):
     EXPENSE = "Expense"
     DEPOSIT = "Deposit"
+
+
+class ExpenseOption(EnumBase):
+    MONTH = "Month"
+    CATEGORY = "Category"
+    TOTAL = "Total"
