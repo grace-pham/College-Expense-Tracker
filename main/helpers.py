@@ -84,7 +84,7 @@ class WorkbookHelpers:
             amount,
             expense_category,
     ):
-        input_row = int(self.get_occupied_dimension()[-2:]) + 1
+        input_row = self._get_input_row()
         self._input_date(input_row)
         self._input_type(input_row, "Expense")
         self._input_amount(input_row, amount)
@@ -94,7 +94,7 @@ class WorkbookHelpers:
             self,
             amount,
     ):
-        input_row = int(self.get_occupied_dimension()[-2:]) + 1
+        input_row = self._get_input_row()
         self._input_type(input_row, "Deposit")
         self._input_date(input_row)
         self._input_amount(input_row, amount)
