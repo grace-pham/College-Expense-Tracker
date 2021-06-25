@@ -1,15 +1,21 @@
 import datetime
 
+from openpyxl import load_workbook
+
 from main.enums import ExpenseCategory, RecordType, ExpenseOption
 
 
 class WorkbookHelpers:
-    def __init__(self, wb):
-        self.wb = wb
+    def __init__(self, source):
+        self.wb = load_workbook(source)
+        self.ws = self.wb.get_sheet_by_name("Sheet")
+        self.dest = source
+
+    def save_workbook(self):
+        self.wb.save(self.dest)
 
     def _get_worksheet(self):
-        ws = self.wb.active
-        return ws
+        return self.ws
 
     def _get_occupied_row(self):
         return int(self.get_occupied_dimension()[-2:])
