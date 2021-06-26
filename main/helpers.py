@@ -47,7 +47,7 @@ class WorkbookHelpers:
         dimension = self._get_worksheet().calculate_dimension()
         return dimension
 
-    def get_amount_by_record_type_and_option(self, record_type, option="Total"):
+    def get_amount_by_record_type_and_option(self, record_type, option=ExpenseOption.TOTAL):
         if record_type == "Deposit":
             return self.calculate_amount_by_record_type_and_option(record_type, option)
         elif record_type == "Expense":
@@ -109,7 +109,7 @@ class WorkbookHelpers:
     ):
         input_row = self._get_input_row()
         self._input_date(input_row)
-        self._input_type(input_row, "Expense")
+        self._input_type(input_row, RecordType.EXPENSE)
         self._input_amount(input_row, amount)
         self._input_category(input_row, expense_category)
 
@@ -118,7 +118,7 @@ class WorkbookHelpers:
             amount,
     ):
         input_row = self._get_input_row()
-        self._input_type(input_row, "Deposit")
+        self._input_type(input_row, RecordType.DEPOSIT)
         self._input_date(input_row)
         self._input_amount(input_row, amount)
 
