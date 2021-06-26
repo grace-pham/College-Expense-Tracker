@@ -18,10 +18,13 @@ class WorkbookHelpers:
         return self.ws
 
     def _get_occupied_row(self):
-        return int(self.get_occupied_dimension()[-2:])
+        occupied_cells = [s for s in self.get_occupied_dimension().split(":")]
+        cell = occupied_cells[1]
+        occupied_row = int(''.join([d for d in cell if d.isdigit()]))
+        return occupied_row
 
     def _get_input_row(self):
-        return int(self.get_occupied_dimension()[-2:]) + 1
+        return self._get_occupied_row() + 1
 
     def _input_amount(self, input_row, amount):
         input_cell = f'D{input_row}'
