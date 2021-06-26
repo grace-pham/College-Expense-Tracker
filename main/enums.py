@@ -1,11 +1,17 @@
-from enum import Enum
+import inspect
+import re
 
 
-class EnumBase(Enum):
+class EnumBase(object):
     @classmethod
     def get_list(cls):
-        attributes = [att_value.value for att, att_value in cls.__members__.items()]
-        return attributes
+        attributes = inspect.getmembers(cls, lambda att: not (inspect.ismethod(att)))
+        value_list = []
+        for key, value in attributes:
+            rx = re.compile(r'\b__(?:\w*)__?\b')
+            if key not in rx.findall(key):
+                value_list.append(value)
+        return value_list
 
 
 class ExpenseCategory(EnumBase):
