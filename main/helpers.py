@@ -47,7 +47,7 @@ class WorkbookHelpers:
         dimension = self._get_worksheet().calculate_dimension()
         return dimension
 
-    def get_amount_by_record_type_and_option(self, record_type, option=ExpenseOption.TOTAL):
+    def get_amount_by_record_type_and_option(self, record_type, option=RecordOption.TOTAL):
         if record_type == "Deposit":
             return self.calculate_amount_by_record_type_and_option(record_type, option)
         elif record_type == "Expense":
@@ -75,7 +75,7 @@ class WorkbookHelpers:
         return self._get_worksheet()[cell].value
 
     def check_option(self, option, cell_content):
-        assert option in ExpenseOption.get_list()
+        assert option in RecordOption.get_list()
         if cell_content == option:
             return True
         else:
@@ -89,9 +89,7 @@ class WorkbookHelpers:
             return False
 
     def get_expense_by_option(self, option="Total"):
-        if option == ExpenseOption.MONTH or option == ExpenseOption.CATEGORY:
-            return self.get_amount_by_record_type_and_option(RecordType.EXPENSE, option)
-        elif option == ExpenseOption.TOTAL:
+        if option == RecordOption.TOTAL:
             return self.get_amount_by_record_type_and_option(RecordType.EXPENSE)
         else:
             raise Exception("Option Invalid")
