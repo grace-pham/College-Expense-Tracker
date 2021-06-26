@@ -2,7 +2,7 @@ import datetime
 
 from openpyxl import load_workbook
 
-from main.enums import ExpenseCategory, RecordType, ExpenseOption
+from main.enums import ExpenseCategory, RecordType, RecordOption
 
 
 class WorkbookHelpers:
