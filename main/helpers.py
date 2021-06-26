@@ -57,7 +57,7 @@ class WorkbookHelpers:
 
     def calculate_amount_by_record_type_and_option(self, record_type, option):
         total = 0
-        for i in range(1, self._get_occupied_row()):
+        for i in range(1, self._get_occupied_row()+1):
             cell = f'B{i}'
             cell_content = self._get_worksheet()[cell].value
             if self.check_record_type(record_type, cell_content):
