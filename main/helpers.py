@@ -11,9 +11,6 @@ class WorkbookHelpers:
         self.ws = self.wb.get_sheet_by_name("Sheet")
         self.dest = source
 
-    def save_workbook(self):
-        self.wb.save(self.dest)
-
     def _get_worksheet(self):
         return self.ws
 
@@ -50,13 +47,23 @@ class WorkbookHelpers:
         dimension = self._get_worksheet().calculate_dimension()
         return dimension
 
-    def get_amount_by_record_type_and_option(self, record_type, option=RecordOption.TOTAL):
-        if record_type == "Deposit":
-            return self.calculate_amount_by_record_type_and_option(record_type, option)
-        elif record_type == "Expense":
-            return self.calculate_amount_by_record_type_and_option(record_type, option)
+    def check_record_type(self, record_type, cell_content):
+        assert record_type in RecordType.get_list()
+        if cell_content == record_type:
+            return True
         else:
-            raise Exception("Record Type Invalid")
+            return False
+
+    def check_option(self, option, cell_content):
+        assert option in RecordOption.get_list()
+        if cell_content == option:
+            return True
+        else:
+            return False
+
+    def get_amount_by_row(self, row):
+        cell = f'D{row}'
+        return self._get_worksheet()[cell].value
 
     def calculate_amount_by_record_type_and_option(self, record_type, option):
         total = 0
@@ -73,23 +80,13 @@ class WorkbookHelpers:
                         total += self.get_amount_by_row(i)
         return total
 
-    def get_amount_by_row(self, row):
-        cell = f'D{row}'
-        return self._get_worksheet()[cell].value
-
-    def check_option(self, option, cell_content):
-        assert option in RecordOption.get_list()
-        if cell_content == option:
-            return True
+    def get_amount_by_record_type_and_option(self, record_type, option=RecordOption.TOTAL):
+        if record_type == "Deposit":
+            return self.calculate_amount_by_record_type_and_option(record_type, option)
+        elif record_type == "Expense":
+            return self.calculate_amount_by_record_type_and_option(record_type, option)
         else:
-            return False
-
-    def check_record_type(self, record_type, cell_content):
-        assert record_type in RecordType.get_list()
-        if cell_content == record_type:
-            return True
-        else:
-            return False
+            raise Exception("Record Type Invalid")
 
     def get_expense_by_option(self, option="Total"):
         if option == RecordOption.TOTAL:
@@ -97,11 +94,11 @@ class WorkbookHelpers:
         else:
             raise Exception("Option Invalid")
 
-    def get_balance(self):
-        return self.get_total_deposit() - self.get_expense_by_option()
-
     def get_total_deposit(self):
         return self.get_amount_by_record_type_and_option(RecordType.DEPOSIT)
+
+    def get_balance(self):
+        return self.get_total_deposit() - self.get_expense_by_option()
 
     def input_expense(
             self,
@@ -123,3 +120,5 @@ class WorkbookHelpers:
         self._input_date(input_row)
         self._input_amount(input_row, amount)
 
+    def save_workbook(self):
+        self.wb.save(self.dest)
