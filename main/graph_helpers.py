@@ -1,5 +1,7 @@
+from matplotlib import pyplot as plt
+
 from helpers import WorkbookHelpers
-import matplotlib as plt
+
 
 class PlottingHelpers(WorkbookHelpers):
     def get_existing_expense_category(self):
@@ -19,5 +21,5 @@ class PlottingHelpers(WorkbookHelpers):
         for label in labels:
             category_data = self.get_expense_category_data(label)
             data.append(category_data)
-
-        plt.pyplot.pie(data=data, labels=labels)
+        plt.pie(x=data, labels=labels)
+        plt.show()
